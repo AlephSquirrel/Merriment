@@ -1,0 +1,84 @@
+{arrows}
+
+################
+#   % Modulo   #
+#v=============#
+#>~:}~:},{*{~-@#
+################
+
+###############
+# ( Less Than #
+#v============#
+#>~-`@        #
+###############
+
+##################
+# ) Greater Than #
+#v===============#
+#>-`@            #
+##################
+
+################
+#   = Equals   #
+#v=============#
+#>-:0~-`~`+1~-@#
+################
+
+_ Horizontal If: Pop value, then go right if it's positive, or left if it's non-positive.
+
+###################
+# _ Horizontal If #
+#v================#
+#>{.{.`2*1-}0}@   #
+###################
+
+| Vertical If: Pop value, then go down if it's positive, or up if it's non-positive.
+
+#################
+# | Vertical If #
+#v==============#
+#>{.{.0}`2*1-}@ #
+#################
+
+boost: Pop value and multiply IP velocity by it.
+
+############
+#  boost   #
+#v=========#
+#>:{*~{*}}@#
+############
+
+print: Print a string from the stack terminated by a non-positive value.
+
+#########
+# print #
+#======v#
+#    v:<#
+#  @._o^#
+#########
+
+rot: a b c -> b c a
+
+########
+# rot  #
+#v=====#
+#>}~{~@#
+########
+
+get: Pop n, then push the nth item from the top of the stack (0-indexed). If n is negative, get the 0th item.
+
+##############
+#    get     #
+#===v========#
+#   :        #
+#@:._~}1-g{~@#
+##############
+
+set: Pop n, pop x, then set the nth item from the top of the stack to x (0-indexed). If n is negative, set the 0th item.
+
+##############
+#    set     #
+#====v=======#
+#    :       #
+#@.~._r}1-s{@#
+##############
