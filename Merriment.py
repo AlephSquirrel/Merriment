@@ -161,6 +161,14 @@ def run_code(codeboxes, stack, vstack, name = ''):
         elif command == 'o':
             # Output character
             print(end=chr(stack.pop()))
+        elif command == '!':
+            # Debug
+            print("! DEBUG !")
+            print(f"Codebox: {name}")
+            print(f"Position: {(x, y)}")
+            print(f"Velocity: {(vx, vy)}")
+            print(f"Data stack: {stack}")
+            print(f"Velocity stack: {vstack}")
         else:
             # Push velocity to velocity stack, execute command, pop new velocity from velocity stack.
             vstack.append(vx)

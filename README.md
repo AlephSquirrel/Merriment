@@ -4,6 +4,7 @@ Merriment is a 2D stack-based programming language, inspired by Befunge and othe
 *v0.2 Changelog:*
 * Error messages are more informative
 * Added ? Signpost and num -> str
+* Added ! Debug
 
 ## Codeboxes
 Here is an example of a codebox:
@@ -59,6 +60,7 @@ For most programs, you probably want to import `{stdlib}`, since that will allow
 |"|Toggle string mode|
 |i|Input character (-1 on EOF)|
 |o|Output character|
+|!|Debug: Print message containing current codebox, position, velocity, and contents of both stacks|
 ### Commands in {stdlib}
 |Command|Function|
 |--|--|
