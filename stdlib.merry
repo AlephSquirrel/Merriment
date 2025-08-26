@@ -82,3 +82,31 @@ set: Pop n, pop x, then set the nth item from the top of the stack to x (0-index
 #    :       #
 #@.~._r}1-s{@#
 ##############
+
+? Signpost: Pop value, then change velocity depending on its sign:
+- If it's positive, rotate 90 degrees clockwise.
+- If it's 0, leave velocity unchanged.
+- If it's negative, rotate 90 degrees counter-clockwise.
+
+##############
+# ? Signpost #
+#==v=========#
+#  :         #
+# v_.0{-{~}}@#
+# 0          #
+# ~          #
+# -          #
+#@_{0{-~}}@  #
+##############
+
+num -> str: Pop number, then push its string representation, terminated by 0.
+
+################
+#  num -> str  #
+#=====v========#
+#>.@  :        #
+#|:<~0?0~-n"-"@#
+#:    >"0"@    #
+#↊ ^,↊~<       #
+#>%"0"+^       #
+################

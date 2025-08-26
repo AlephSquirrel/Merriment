@@ -1,7 +1,7 @@
 '''
     Interpreter for the language Merriment
     Author: AlephSquirrel
-    Version: 0.1
+    Version: 0.2
 '''
 
 import sys, re, argparse
@@ -37,7 +37,7 @@ def read_code(filename):
         line = line.rstrip('\n')
         if in_codebox:
             if len(line) != codebox_width:
-                err_message(f"Incorrect width on line {line_num + 1}")
+                err_message(f"Incorrect width: file {filename}, line {line_num + 1}")
             codebox_lines += 1
             if codebox_lines == 2:
                 # Parse codebox name
@@ -45,14 +45,14 @@ def read_code(filename):
                 if name_match:
                     name = name_match.group(1)
                 else:
-                    err_message(f"Bad codebox name on line {line_num + 1}")
+                    err_message(f"Bad codebox name: file {filename}, line {line_num + 1}")
             elif codebox_lines == 3:
                 # Parse codebox entry line
                 entry_match = re.fullmatch("#=*v=*#", line)
                 if entry_match:
                     entry_col = entry_match.group(0).find('v') - 1
                 else:
-                    err_message(f"Bad entry point on line {line_num + 1}")
+                    err_message(f"Bad entry point: file {filename}, line {line_num + 1}")
             elif re.fullmatch("#*", line):
                 # Parse bottom border of codebox
                 codeboxes[name[:1]] = Codebox(name, codebox_width - 2, len(code), entry_col, code)
@@ -63,7 +63,7 @@ def read_code(filename):
                 if row_match:
                     code.append(row_match.group(1))
                 else:
-                    err_message(f"Bad codebox row on line {line_num + 1}")
+                    err_message(f"Bad codebox row: file {filename}, line {line_num + 1}")
         else:
             if re.fullmatch("#+", line):
                 # Top border of codebox
@@ -91,7 +91,10 @@ def run_code(codeboxes, stack, vstack, name = ''):
     while True:
         # Test for out-of-bounds
         if (x < 0) or (x >= codebox.width) or (y < 0) or (y >= codebox.height):
-            err_message("Out of bounds")
+            if name:
+                err_message(f"Out of bounds in codebox {name}")
+            else:
+                err_message("Out of bounds in main codebox")
         
         command = codebox.code[y][x]
         if string_mode:
