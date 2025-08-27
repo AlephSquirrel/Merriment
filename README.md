@@ -1,6 +1,12 @@
 # Merriment
 Merriment is a 2D stack-based programming language, inspired by Befunge and other similar languages. The main thing that sets Merriment apart is its extensibility. Code is written in codeboxes, which can be called from other codeboxes. This gives code a lot more reusability compared to other similar 2D languages.
 
+*v0.2 Changelog:*
+* Error messages are more informative
+* Added ? Signpost and num -> str
+* Added ! Debug
+* Removed Hello World example (it was supposed to be didactic but this README kinda does that anyway, and it feels confusing to have it in the same place as the libraries when it's not a library)
+
 ## Codeboxes
 Here is an example of a codebox:
 ```
@@ -55,6 +61,7 @@ For most programs, you probably want to import `{stdlib}`, since that will allow
 |"|Toggle string mode|
 |i|Input character (-1 on EOF)|
 |o|Output character|
+|!|Debug: Print message containing current codebox, position, velocity, and contents of both stacks|
 ### Commands in {stdlib}
 |Command|Function|
 |--|--|
@@ -73,3 +80,5 @@ For most programs, you probably want to import `{stdlib}`, since that will allow
 |r|rot: a b c -> b c a|
 |g|get: Pop n, then push the nth item from the top of the stack (0-indexed). If n is negative, get the 0th item.|
 |s|set: Pop n, pop x, then set the nth item from the top of the stack to x (0-indexed). If n is negative, set the 0th item.|
+|?|Signpost: Pop value, then change velocity depending on its sign: If it's positive, rotate 90 degrees clockwise. If it's 0, leave velocity unchanged. If it's negative, rotate 90 degrees counter-clockwise.|
+|n|num->str: Pop number, then push its string representation, terminated by 0.|
