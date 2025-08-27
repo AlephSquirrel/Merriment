@@ -5,6 +5,7 @@ Merriment is a 2D stack-based programming language, inspired by Befunge and othe
 * Error messages are more informative
 * Added ? Signpost and num -> str
 * Added ! Debug
+* Removed Hello World example (it was supposed to be didactic but this README kinda does that anyway)
 
 ## Codeboxes
 Here is an example of a codebox:
