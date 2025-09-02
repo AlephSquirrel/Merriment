@@ -55,6 +55,6 @@ factorial: Pop n, push n! If n is negative, push 1.
 #############
 # factorial #
 #v==========#
-#>1~:v-1~<  #
-#  @._:r*^  #
+#>1~:v:-1~< #
+#  @._:r* ^ #
 #############
