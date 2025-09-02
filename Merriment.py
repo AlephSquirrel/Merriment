@@ -1,7 +1,7 @@
 '''
     Interpreter for the language Merriment
     Author: AlephSquirrel
-    Version: 0.2
+    Version: 0.3
 '''
 
 import sys, re, argparse
@@ -34,7 +34,7 @@ def read_code(filename):
     in_codebox = False
     
     for line_num, line in enumerate(lines):
-        line = line.rstrip('\n')
+        line = line.rstrip('\n\r')
         if in_codebox:
             if len(line) != codebox_width:
                 err_message(f"Incorrect width: file {filename}, line {line_num + 1}")
@@ -92,7 +92,7 @@ def run_code(codeboxes, stack, vstack, name = ''):
         # Test for out-of-bounds
         if (x < 0) or (x >= codebox.width) or (y < 0) or (y >= codebox.height):
             if name:
-                err_message(f"Out of bounds in codebox {name}")
+                err_message(f"Out of bounds in codebox {codebox.name}")
             else:
                 err_message("Out of bounds in main codebox")
         
@@ -164,7 +164,7 @@ def run_code(codeboxes, stack, vstack, name = ''):
         elif command == '!':
             # Debug
             print("! DEBUG !")
-            print(f"Codebox: {name}")
+            print(f"Codebox: {codebox.name}")
             print(f"Position: {(x, y)}")
             print(f"Velocity: {(vx, vy)}")
             print(f"Data stack: {stack}")
