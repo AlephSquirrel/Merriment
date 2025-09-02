@@ -1,11 +1,9 @@
 # Merriment
-Merriment is a 2D stack-based programming language, inspired by Befunge and other similar languages. The main thing that sets Merriment apart is its extensibility. Code is written in codeboxes, which can be called from other codeboxes. This gives code a lot more reusability compared to other similar 2D languages.
 
-*v0.2 Changelog:*
-* Error messages are more informative
-* Added ? Signpost and num -> str
-* Added ! Debug
-* Removed Hello World example (it was supposed to be didactic but this README kinda does that anyway, and it feels confusing to have it in the same place as the libraries when it's not a library)
+Merriment is a 2D stack-based programming language, inspired by Befunge and similar languages. Merriment asks the question: what if you could define new commands using the language itself? To that end, Merriment has 2 features not present in most fungeoids: code is written in multiple codeboxes which can call each other with single-character commands, and there is a velocity stack which can be used to manipulate the velocity of the IP.
+
+## Usage
+`python3 Merriment.py program` (file name is `program.merry`)
 
 ## Codeboxes
 Here is an example of a codebox:
@@ -16,9 +14,9 @@ Here is an example of a codebox:
 #>123@#
 #######
 ```
-The name of this codebox is `foo`. (Leading and trailing spaces in the name are ignored.) Execution starts at the `v` in the line below the name and continues downward. Like plenty of other 2D languages, the `>` command redirects the instruction pointer toward the right. Then, 1, 2, and 3 are pushed onto the stack. Finally, we hit the `@` symbol, which returns control to whatever codebox called `foo`.
+The name of this codebox is `foo`. (Leading and trailing spaces in the name are ignored.) The IP (Instruction Pointer) starts from the `v` in the line below the name and continues downward. (Note that the `v` can be anywhere in the line of equals signs, not just the left.) As you might expect, the `>` command redirects the instruction pointer toward the right. Then, 1, 2, and 3 are pushed onto the stack. Finally, the IP hits the `@` symbol, which returns control to whatever codebox called `foo`.
 
-How do we call this codebox? Using the first character in its name. So, to call `foo`, we use the `f` command. Suppose we have this codebox in the same file:
+How do you call a codebox? Using the first character in its name. So, to call `foo`, use the `f` command. Suppose we have this codebox in the same file:
 ```
 ########
 #      #
@@ -29,16 +27,19 @@ How do we call this codebox? Using the first character in its name. So, to call 
 This codebox has an empty name, making it the "main codebox". When the program is run, this codebox will be called. First, it calls `foo`, which pushes 1, 2, and 3. Then these values are added together, resulting in 6. The `o` command prints ASCII character 6 (ACK), and finally the `@` command causes the program to terminate.
 
 ## Data Stack and Velocity Stack
-There are two stacks that are used to hold data. Both can hold arbitrarily sized integers. One of them is the *data stack*, as seen in the previous example. The other is the *velocity stack*. When a codebox is called, the velocity of the instruction pointer is pushed to the velocity stack. First the x component, then the y component. After returning from the call, the components are popped again in the reverse order.
+There are two stacks that are used to hold data. Both can hold arbitrarily sized integers. One of them is the *data stack*, as seen in the previous example. The other is the *velocity stack*. When a codebox is called, the velocity of the instruction pointer is pushed to the velocity stack: first the x component, then the y component. After returning from the call, the components are popped again in the reverse order, possibly changing the IP's velocity. (Note that if the velocity stack is left untouched, the velocity remains the same after the call.)
 
-If the called codebox does nothing with the velocity stack, this means the IP velocity remains unchanged after the call. The `{` and `}` commands can be used to interact with the velocity stack. In fact, this is how the arrow commands are defined. If you want, you could implement the mirrors (`/` and `\`) from ><>, or make up your own commands that interact with the IP velocity in new ways.
+Notably, even the arrows (`<>^v`) are defined in this way, rather than being base commands implemented directly into the interpreter.
 
 The velocity stack can also be used as an extra place to store data. You can see it being used that way in some of the codeboxes in the standard library.
 
 ## Imports
-To import another file, you just need an import statement on one line like this: `{file}` This will look for a file called `file.merry` and import everything from it.
+To import another file, you need an import statement on its own line like this: `{file}` This will look for a file called `file.merry` in the same folder as the interpreter and import all of its codeboxes.
 
-For most programs, you probably want to import `{stdlib}`, since that will allow you to use arrows and a few other functions that are useful for general programming.
+In general, `{stdlib}` is recommended, because it imports `{arrows}` and also contains a few useful commands.
+
+## Comments
+Anything outside of a codebox that is not an import statement will be considered a comment and ignored. Comments can also be written inside codeboxes, as long as you ensure the IP never reaches them.
 
 ## Commands
 ### Base commands
@@ -62,7 +63,7 @@ For most programs, you probably want to import `{stdlib}`, since that will allow
 |i|Input character (-1 on EOF)|
 |o|Output character|
 |!|Debug: Print message containing current codebox, position, velocity, and contents of both stacks|
-### Commands in {stdlib}
+### Commands in {stdlib} + {arrows}
 |Command|Function|
 |--|--|
 |>|Right: Set velocity to 1,0|
@@ -82,3 +83,6 @@ For most programs, you probably want to import `{stdlib}`, since that will allow
 |s|set: Pop n, pop x, then set the nth item from the top of the stack to x (0-indexed). If n is negative, set the 0th item.|
 |?|Signpost: Pop value, then change velocity depending on its sign: If it's positive, rotate 90 degrees clockwise. If it's 0, leave velocity unchanged. If it's negative, rotate 90 degrees counter-clockwise.|
 |n|num->str: Pop number, then push its string representation, terminated by 0.|
+### Other modules
+* {number}: More math functions
+* {shmove}: More IP movement options
