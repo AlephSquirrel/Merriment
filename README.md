@@ -1,6 +1,6 @@
 # Merriment
 
-Merriment is a 2D stack-based programming language, inspired by Befunge and similar languages. Merriment asks the question: what if you could define new commands using the language itself? To that end, Merriment has 2 features not present in most fungeoids: code is written in multiple codeboxes which can call each other with single-character commands, and there is a velocity stack which can be used to manipulate the velocity of the IP.
+Merriment is a 2D stack-based programming language. I wanted it to be a bit nicer to program in than other similar languages, so it has the capability to define new commands. This by itself is nothing new; Funge-98 has "fingerprints" which redefine the commands A-Z. But in Merriment, new commands are written in Merriment. Could you say these are just function calls? Basically, yes, but there is a "velocity stack" which these commands can access, letting them manipulate the velocity of the IP. This lets you do things like define new types of redirecting commands, new types of control flow, etc.
 
 ## Usage
 `python3 Merriment.py program` (file name is `program.merry`)
